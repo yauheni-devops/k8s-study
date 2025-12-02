@@ -1,0 +1,9 @@
+.DS_Store
+.vscode/
+.idea/
+# K8s secrets and configs
+*.kube/config
+kubeconfig
+secrets.yaml
+secret.yaml
+*.tgz
