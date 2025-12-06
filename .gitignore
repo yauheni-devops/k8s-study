@@ -7,3 +7,4 @@ kubeconfig
 secrets.yaml
 secret.yaml
 *.tgz
+minikube-linux-amd64
