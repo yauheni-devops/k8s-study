@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend-pod
+  namespace: app1
+  labels:
+    app: web-store
+    env: production
+    tier: frontend
+  annotations:
+    owner: "DevOps Team"
+    description: "Главная страница магазина"
+    contact: "admin@example.com"
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    imagePullPolicy: IfNotPresent
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: backend-pod
+  namespace: app2
+  labels:
+    app: payment-api
+    env: testing
+    tier: backend
+  annotations:
+    version: "v2.0.1-beta"
+    build-date: "2023-12-07"
+    issue-tracker: "JIRA-1234"
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    imagePullPolicy: IfNotPresent
+    ports:
+    - containerPort: 80
