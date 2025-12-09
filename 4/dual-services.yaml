@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dual-deploy
+  labels:
+    app: dual-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dual-app
+  template:
+    metadata:
+      labels:
+        app: dual-app
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+---
+# Сервис 1: Внутренний (ClusterIP - тип по умолчанию)
+apiVersion: v1
+kind: Service
+metadata:
+  name: internal-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: dual-app     # <-- Направляет трафик на те же поды
+  ports:
+    - port: 80        # Порт сервиса
+      targetPort: 80  # Порт контейнера
+---
+# Сервис 2: Внешний (NodePort)
+apiVersion: v1
+kind: Service
+metadata:
+  name: external-svc
+spec:
+  type: NodePort
+  selector:
+    app: dual-app     # <-- И этот направляет туда же!
+  ports:
+    - port: 80
+      targetPort: 80
