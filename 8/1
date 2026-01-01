@@ -1,0 +1,18 @@
+Основные команды
+kubectl get nodes
+
+kubectl get pods (po)
+
+kubectl get po --show-labels
+
+kubectl get pods --all-namespaces
+
+kubectl get pods -l dev
+
+kubectl get namespaces (ns)
+
+kubectl port-forward app-kuber-1 11111:8000
+
+kubectl exec -it app-kuber-1 -- /bin/bash
+
+kubectl logs app-kuber-1 --container app-kuber-container
