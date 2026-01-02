@@ -1,0 +1,12 @@
+Основные команды
+minikube start --profile cluster-1
+
+minikube addons list
+
+minikube addons enable ingress 
+
+minikube ssh
+
+minikube ip
+
+minikube stop
