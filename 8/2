@@ -1,4 +1,9 @@
 Основные команды
+
+https://www.youtube.com/watch?v=KERFsC9UF_4&list=PL3SzV1_k2H1VDePbSWUqERqlBXIk02wCQ&index=12
+https://kubernetes.io/docs/concepts/services-networking/ingress/
+https://konghq.com/blog/learning-center/what-is-kubernetes-ingress
+
 minikube start --profile cluster-1
 
 minikube addons list
