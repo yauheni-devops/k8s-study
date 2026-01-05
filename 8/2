@@ -4,6 +4,11 @@ https://www.youtube.com/watch?v=KERFsC9UF_4&list=PL3SzV1_k2H1VDePbSWUqERqlBXIk02
 https://kubernetes.io/docs/concepts/services-networking/ingress/
 https://konghq.com/blog/learning-center/what-is-kubernetes-ingress
 
+https://devops-gitlab.inno.ws/
+
+до 29.04.2026
+
+
 minikube start --profile cluster-1
 
 minikube addons list
