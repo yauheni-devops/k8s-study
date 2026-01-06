@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-probes
+  labels:
+    app: secure-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: secure-app
+  template:
+    metadata:
+      labels:
+        app: secure-app
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        
+        # --- Liveness Probe (Жив ли я?) ---
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5  # Дать 5 сек на старт перед первой проверкой
+          periodSeconds: 10       # Проверять каждые 10 секунд
+
+        # --- Readiness Probe (Готов ли я?) ---
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 2  # Проверить почти сразу
+          periodSeconds: 5        # Проверять часто
