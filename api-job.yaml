@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: starwars-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: requester
+        image: curlimages/curl
+        imagePullPolicy: IfNotPresent
+        # Меням команду на безопасную (без интернета)
+        command: ["curl", "--version"]
+      restartPolicy: OnFailure
