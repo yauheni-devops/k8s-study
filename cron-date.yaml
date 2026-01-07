@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: time-printer
+spec:
+  schedule: "*/5 * * * *"   # <--- Каждые 5 минут
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: timer
+            image: busybox
+            imagePullPolicy: IfNotPresent  # <--- Берем локальный образ
+            command: ["date"]              # <--- Команда вывода даты
+          restartPolicy: OnFailure
