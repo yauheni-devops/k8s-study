@@ -1,0 +1,41 @@
+# 1. Создаем "Флешку" с файлом
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: greeting-config
+data:
+  message.txt: "Привет, мир! (Я прочитан из Volume)"
+
+---
+# 2. Создаем Приложение
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-volume-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        imagePullPolicy: IfNotPresent # Используем локальный образ
+        # Команда: Читать файл /etc/greet/message.txt каждые 5 секунд
+        command: ["/bin/sh", "-c", "while true; do cat /etc/greet/message.txt; sleep 5; done"]
+        
+        # Подключаем Volume внутрь контейнера
+        volumeMounts:
+        - name: my-volume
+          mountPath: /etc/greet  # Куда положить файл внутри контейнера
+      
+      # Объявляем, откуда брать Volume (из ConfigMap)
+      volumes:
+      - name: my-volume
+        configMap:
+          name: greeting-config
