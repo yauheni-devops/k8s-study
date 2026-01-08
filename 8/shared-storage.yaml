@@ -1,0 +1,44 @@
+# 1. Запрос на создание диска (PVC)
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: notes-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+
+---
+# 2. Deployment (Читатель)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notes-reader
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reader
+  template:
+    metadata:
+      labels:
+        app: reader
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        imagePullPolicy: IfNotPresent
+        # Создаем пустой файл (если нет) и следим за ним
+        command: ["/bin/sh", "-c", "touch /mnt/data/notes.txt && tail -f /mnt/data/notes.txt"]
+        
+        # Монтируем диск
+        volumeMounts:
+        - name: shared-storage
+          mountPath: /mnt/data
+      
+      volumes:
+      - name: shared-storage
+        persistentVolumeClaim:
+          claimName: notes-pvc  # <-- Связь с диском
