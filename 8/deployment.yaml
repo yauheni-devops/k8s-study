@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notes-viewer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notes-viewer
+  template:
+    metadata:
+      labels:
+        app: notes-viewer
+    spec:
+      containers:
+      - name: viewer
+        image: busybox
+        imagePullPolicy: IfNotPresent  # <--- ДОБАВИТЬ ЭТУ СТРОКУ
+        # Создаем файл (чтобы не было ошибки) и следим за ним
+        command: ["/bin/sh", "-c", "touch /data/notes.txt && tail -f /data/notes.txt"]
+        volumeMounts:
+        - mountPath: "/data"
+          name: shared-storage
+      volumes:
+      - name: shared-storage
+        persistentVolumeClaim:
+          claimName: notes-pvc

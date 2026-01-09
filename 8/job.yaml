@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: note-writer-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: writer
+        image: busybox
+        imagePullPolicy: IfNotPresent   # Важно для работы без интернета
+        command: ["/bin/sh", "-c", "echo 'Важная заметка создана в: ' $(date) >> /data/notes.txt"]
+        volumeMounts:
+        - mountPath: "/data"
+          name: shared-storage          # Ссылка на том ниже
+      restartPolicy: OnFailure          # Обязательно для Job!
+      volumes:
+      - name: shared-storage            # Описание тома
+        persistentVolumeClaim:
+          claimName: notes-pvc
