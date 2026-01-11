@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: monitoring-ds
+spec:
+  selector:
+    matchLabels:
+      app: monitoring-ds
+  template:
+    metadata:
+      labels:
+        app: monitoring-ds
+    spec:
+      containers:
+      - name: agent
+        image: busybox
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/sh", "-c", "while true; do sleep 3600; done"]
