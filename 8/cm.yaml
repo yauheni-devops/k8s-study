@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  # Это ключ и значение, которые мы хотим передать
+  GREETING_TEXT: "Привет! Это сообщение пришло из ConfigMap."
