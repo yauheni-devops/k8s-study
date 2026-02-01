@@ -1,0 +1,8 @@
+replicaCount: 1
+
+image:
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+ingress:
+  host: "dev.app.local"

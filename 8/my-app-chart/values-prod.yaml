@@ -1,0 +1,8 @@
+replicaCount: 3
+
+image:
+  tag: "1.25.3"
+  pullPolicy: IfNotPresent
+
+ingress:
+  host: "prod.app.local"

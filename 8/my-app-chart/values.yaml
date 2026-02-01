@@ -1,0 +1,16 @@
+replicaCount: 1
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  # Переопределяется в values-dev/prod
+  tag: "" 
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  # Переопределяется в values-dev/prod
+  host: "localhost"
